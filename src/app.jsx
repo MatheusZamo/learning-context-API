@@ -1,5 +1,5 @@
-import { useContext } from "react"
-import { ImgHeightContext } from "./context/img-height"
+import { ImgHeightProvider } from "./context/img-height"
+import { useImgHeight } from "./hook/img-height"
 
 const games = [
   {
@@ -43,12 +43,14 @@ const Game = ({ game }) => (
 )
 
 const Img = ({ game }) => {
-  const { height } = useContext(ImgHeightContext)
+  const { height } = useImgHeight()
   return <img src={game.imgUrl} alt={game.name} style={{ height }} />
 }
 
-const App = () => {
-  const { isLarge, setIsLarge } = useContext(ImgHeightContext)
+const Head = () => <h1>Lista de Games</h1>
+
+const Main = () => {
+  const { isLarge, setIsLarge } = useImgHeight()
   const handleChange = (e) => setIsLarge(e.target.checked)
   return (
     <>
@@ -61,5 +63,14 @@ const App = () => {
     </>
   )
 }
+
+const App = () => (
+  <>
+    <Head />
+    <ImgHeightProvider>
+      <Main />
+    </ImgHeightProvider>
+  </>
+)
 
 export { App }
