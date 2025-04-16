@@ -1,5 +1,16 @@
-import { createContext } from "react"
+import { createContext, useState } from "react"
 
 const ImgHeightContext = createContext()
 
-export { ImgHeightContext }
+const ImgHeightProvider = ({ children }) => {
+  const [isLarge, setIsLarge] = useState(false)
+  const height = isLarge ? 200 : 100
+
+  return (
+    <ImgHeightContext.Provider value={{ height, isLarge, setIsLarge }}>
+      {children}
+    </ImgHeightContext.Provider>
+  )
+}
+
+export { ImgHeightContext, ImgHeightProvider }

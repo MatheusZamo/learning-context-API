@@ -1,4 +1,4 @@
-import { useState, useContext } from "react"
+import { useContext } from "react"
 import { ImgHeightContext } from "./context/img-height"
 
 const games = [
@@ -48,18 +48,17 @@ const Img = ({ game }) => {
 }
 
 const App = () => {
-  const [isLarge, setIsLarge] = useState(false)
-  const imgHeight = isLarge ? 200 : 100
+  const { isLarge, setIsLarge } = useContext(ImgHeightContext)
   const handleChange = (e) => setIsLarge(e.target.checked)
   return (
-    <ImgHeightContext.Provider value={{ height: imgHeight }}>
+    <>
       <label>
         <input type="checkbox" checked={isLarge} onChange={handleChange} />
         Ver imagens maiores
       </label>
       <hr />
       <GamesList />
-    </ImgHeightContext.Provider>
+    </>
   )
 }
 
