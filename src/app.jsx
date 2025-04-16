@@ -1,6 +1,5 @@
 import { useState, useContext } from "react"
 import { ImgHeightContext } from "./context/img-height"
-import { BorderRadiusContext } from "./context/border-radius"
 
 const games = [
   {
@@ -45,33 +44,21 @@ const Game = ({ game }) => (
 
 const Img = ({ game }) => {
   const { height } = useContext(ImgHeightContext)
-  const { borderRadius, setBorderRadius } = useContext(BorderRadiusContext)
-  const handleChangeBorder = () => setBorderRadius((prev) => prev + 5)
-  return (
-    <img
-      onClick={handleChangeBorder}
-      src={game.imgUrl}
-      alt={game.name}
-      style={{ height, borderRadius }}
-    />
-  )
+  return <img src={game.imgUrl} alt={game.name} style={{ height }} />
 }
 
 const App = () => {
   const [isLarge, setIsLarge] = useState(false)
-  const [borderRadius, setBorderRadius] = useState(5)
   const imgHeight = isLarge ? 200 : 100
   const handleChange = (e) => setIsLarge(e.target.checked)
   return (
     <ImgHeightContext.Provider value={{ height: imgHeight }}>
-      <BorderRadiusContext.Provider value={{ borderRadius, setBorderRadius }}>
-        <label>
-          <input type="checkbox" checked={isLarge} onChange={handleChange} />
-          Ver imagens maiores
-        </label>
-        <hr />
-        <GamesList />
-      </BorderRadiusContext.Provider>
+      <label>
+        <input type="checkbox" checked={isLarge} onChange={handleChange} />
+        Ver imagens maiores
+      </label>
+      <hr />
+      <GamesList />
     </ImgHeightContext.Provider>
   )
 }
